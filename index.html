@@ -1,0 +1,420 @@
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أداة تحويل الملفات</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        @keyframes gradientBackground {
+      0% {
+        background-position: 0% 0%;
+      }
+      10% {
+        background-position: 100% 100%;
+      }
+    }
+ 
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: linear-gradient(-45deg, #e91e63, #1a1a73);
+            background-size: 400% 400%;
+            animation: gradientBackground 15s ease infinite;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            color: #3f3f3f;
+            text-align: right;
+       }
+
+        .container {
+            max-width: 680px;
+            width: 680px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+     
+        h1 {
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #4a148c;
+            font-size: 2.5rem;
+            text-align: center;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 2em;
+            text-align: center;
+            line-height: 1.6;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            width: 100%;
+            margin: 24px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e1be;
+        }
+       
+        .drop-area {
+            border: 3px dashed #1e88e9;
+            border-radius: 12px;
+            padding: 60px 30px;
+            margin: 30px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            background-color: #f8fd9fc;
+        }
+        
+        .drop-area:hover {
+            background-color: #e1f5fe;
+            border-color: #a91e3;
+        }
+
+        .drop-area.highlight {
+            border-color: #e91e6;
+            background-color: #ea1e6;
+        }
+        
+        .format-selector {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            max-width: 350px;
+            margin: 30px 0;
+        }  
+        
+        label {
+            margin-right: 0 12px 0 16px;
+            font-weight: 500;
+            color: #555;
+        }
+        
+        select {
+            padding: 8px 16px;
+            background-color: #f7fb0;
+            border: 1px solid #e1;
+            border-radius: 8px;
+            font-size: 1.1em;
+            appearance: none;
+            min-width: 200px;
+            color: #111;
+            cursor: pointer;
+        } 
+        
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            padding: 24px ;
+        }
+        
+        button {
+            background: linear-gradient(45deg, #8a2be2, #1e90ff);
+            padding: 14px 32px;
+            border: none;
+            border-radius: 40px;
+            cursor: pointer;
+            color: white;
+            text-transform: capitalize;
+            font-weight: 600;
+            max-width: 360px;
+            box-shadow: 0px 5px 15px rgba(26, 115, 232, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        button:hover {
+            background: linear-gradient(45deg, #1);
+            box-shadow: 0px 18px 20px rgba(26, 115, 233, 0.3);
+            transform: scale(0.9, 0.9);
+        }
+        
+        button:disabled, button[disabled] {
+            background: linear-gradient(45deg, #);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .progress-container {
+            padding: 20px 0;
+            width: 100%;
+        }
+        
+        progress {
+            --progress-radius: 20px;
+            width: 100%;
+            height: 12px;
+            border-radius: var(--progress-radius);
+            background-color: #e9ece;
+            overflow: hidden;
+        }
+        
+        progress::-webkit-progress-value {
+            border-radius: var(--progress-radius) 0 0 var(--progress-radius);
+            background: linear-gradient(to left, #1a, #3);
+            animation: progress-animation 5s linear both;
+        }
+        
+        @keyframes progress-animation {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 100% 0; }
+        }
+        
+        .download-link {
+            margin-top: 24px;
+            text-decoration: none;
+            color: #1a73;
+            font-weight: 400;
+            padding: 9px 16px;
+            display: block;
+            border-radius: 6px;
+            background-color: #4fc3;
+            max-width: 100%;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .download-link:hover {
+            color: white;
+            background-color: #;
+        }
+        
+        .illustrations {
+            color: #ffc1;
+            margin: 30px 0px;
+            font-size: 16px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .svg-icon {
+            width: 48px;
+            height: 48px;
+            fill: none;
+            stroke: #4a148c;
+            stroke-width: 2px;
+        }
+
+        /* Floating elements animation */
+        .floating-element {
+            position: absolute;
+            background: rgba(0, 0.5, 0, 0.3);
+            border-radius: 50%;
+            opacity: 0.5;
+            z-index: -1;
+            filter: blur(40px);
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+                filter: blur(30px);
+            }
+            50% {
+                transform: translateY(-40px) rotate(360deg);
+                filter: blur(20px);
+            }
+        }
+    </style>
+</head>
+<body aria dir="rtl">
+    <!-- Add floating bubbles -->
+    <div class="floating-element" style="background: #7b19cd9; top: 20%; left:5%; width:250px; height:200px;"></div>
+    <div class="floating-element" style="background:#90e0; top:70%; right:15%; width:300px; height:250px; animation-delay:5s;"></div>
+    <div class="floating-element" style="background:#add8e6; bottom:20%; right:35%; width:250px; height:230px; animation-delay:5s;"></div>
+    <div class="container">
+        <h1>أداة تحويل الملفات</h1>
+        <p class="subtitle">قم بتحويل ملفاتك إلى صيغ مختلفة بسهولة وبسرعة</p>
+        <div class="card">
+            <div class="drop-area" id="dropArea">
+                <svg class="svg-icon" viewBox="0 0 48 48">
+                    <path d="M12 4L4 12L4 4H12ZM4 4V12zM20 4V4H20ZM20 12H20V4H20Z" stroke-width="2" />
+                    <path d="M13 17C14 17 14 19 14 19H18V17H14ZM18 17H18V19H18Z" />
+                    <path d="M9 22L12 26L16 22" />
+                </svg>
+                <p>اسحب الملفات هنا أو انقر هنا لتحديد الملف</p>
+                <input type="file" id="fileInput" accept="video/*,audio/*" style="display: none;">
+            </div>
+        </div>
+        <div class="format-selector">
+            <label for="outputFormat">نوع المخرج</label>
+            <select id="outputFormat">
+                <option value="mp3">MP3</option>
+                <option value="wav">WAV</option>
+                <option value="ogg">OGG</option>
+            </select>
+        </div>
+        <div class="btn-container">
+            <button id="convertBtn">تحويل الملف</button>
+        </div>
+        <div class="progress-container" id="progressContainer" style="display: none;">
+            <p>جار التحويل...</p>
+            <progress id="progressBar" value="0" max="100"></progress>
+        </div>
+        <a id="downloadLink" style="display: none;" class="download-link">تحميل</a>
+        <div class="ratings">
+            ★★★★★
+        </div>
+    </div>
+    
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const dropArea = document.getElementById('dropArea');
+        const convertBtn = document.getElementById('convertBtn');
+        const progressContainer = document.getElementById('progressContainer');
+        const progressBar = document.getElementById('progressBar');
+        const downloadLink = document.getElementById('downloadLink');
+        
+        let inputFile = null;
+        
+        // Handle drag and drop
+        dropArea.addEventListener('click', () => fileInput.click());
+        dropArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropArea.classList.add('highlight');
+        });
+        dropArea.addEventListener('dragleave', () => {
+            dropArea.classList.remove('highlight');
+        });
+        dropArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropArea.classList.remove('highlight');
+            
+            if (e.dataTransfer.files.length) {
+                handleFile(e.dataTransfer.files[0]);
+            }
+        });
+        
+        // Handle file selection
+        fileInput.addEventListener('change', () => {
+            if (fileInput.files.length) {
+                handleFile(fileInput.files[0]);
+            }
+        });
+        
+        // Handle file
+        function handleFile(file) {
+            if (!file.type.includes('video/') && !file.type.includes('audio/')) {
+                alert('يرجى تحديد ملف فيديو أو صوتي');
+                return;
+            }
+            
+            inputFile = file;
+            convertBtn.disabled = false;
+            dropArea.innerHTML = `<p>محدد: ${file.name}</p>`;
+        }
+        
+        // Convert to Audio
+        convertBtn.addEventListener('click', async () => {
+            if (!inputFile) return;
+            
+            const outputFormat = document.getElementById('outputFormat').value;
+            progressContainer.style.display = 'block';
+            convertBtn.disabled = true;
+            
+            try {
+                // Create audio context
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                
+                // Read file as array buffer
+                const arrayBuffer = await inputFile.arrayBuffer();
+                
+                // Decode audio data with progress callback
+                const audioBuffer = await new Promise((resolve, reject) => {
+                    audioContext.decodeAudioData(
+                        arrayBuffer,
+                        (buffer) => resolve(buffer),
+                        (error) => reject(error)
+                    );
+                });
+                
+                // Update progress UI
+                progressBar.value = 50;
+                
+                // Create WAV blob (we'll use this format for export)
+                const raw = new Float32Array(audioBuffer.getChannelData(0));
+                const samples = new Uint8Array(raw.length * 2);
+                
+                for (let i = 0, k = 0; i < raw.length; i++, k+= 2) {
+                    const sample = Math.max(-1, Math.min(1, raw[i]));
+                    const val = sample < 0 ? sample * 32768 : sample * 32767;
+                    samples[k] = val & 0xff;
+                    samples[k + 1] = (val >>> 8) & 0xff;
+                }
+                
+                // Create WAV header
+                const header = new Uint8Array(44);
+                const view = new DataView(header.buffer);
+                
+                // RIFF identifier (big endian)
+                view.setUint32(0, 0x52494646, false);
+                // RIFF chunk length (file size - 8)
+                view.setUint32(4, samples.length + 44 - 8, true);
+                // RIFF type (big endian)
+                view.setUint32(8, 0x57415645, false);
+                // Format chunk identifier (big endian)
+                view.setUint32(12, 0x666d7420, false);
+                // Format chunk length
+                view.setUint32(16, 16, true);
+                // Audio format (1 = PCM)
+                view.setUint16(20, 1, true);
+                // Channel count
+                view.setUint16(22, 1, true);
+                // Sample rate
+                view.setUint32(24, audioBuffer.sampleRate, true);
+                // Byte rate
+                view.setUint32(28, audioBuffer.sampleRate * 2, true);
+                // Block align
+                view.setUint16(32, 2, true);
+                // Bits per sample
+                view.setUint16(34, 16, true);
+                // Data chunk identifier (big endian)
+                view.setUint32(36, 0x64617461, false);
+                // Data chunk length (num samples * num channels * bytes per sample)
+                view.setUint32(40, samples.length, true);
+                
+                // Combine header and samples
+                const wav = new Uint8Array(header.length + samples.length);
+                wav.set(header);
+                wav.set(samples, header.length);
+                
+                // Create blob
+                const blob = new Blob([wav], { type: 'audio/wav' });
+                
+                // Update progress
+                progressBar.value = 100;
+                
+                // Create download link
+                const url = URL.createObjectURL(blob);
+                const fileName = inputFile.name.replace(/\.[^/.]+$/, '') + '.' + outputFormat;
+                
+                downloadLink.href = url;
+                downloadLink.download = fileName;
+                downloadLink.textContent = 'تحميل ' + outputFormat.toUpperCase();
+                downloadLink.style.display = 'inline-block';
+                
+                // Show download link
+                downloadLink.click();
+                
+            } catch (error) {
+                console.error('خطأ في تحويل الملف:', error);
+                alert('خطأ في تحويل الملف. يرجى تجربة ملف آخر.');
+            } finally {
+                convertBtn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>
